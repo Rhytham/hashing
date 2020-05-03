@@ -1,0 +1,20 @@
+void find_sum(vector<int> &A, vector<int> &s, int ind, vector<vector<int> > &ans){
+    for(int i=0;i<ans.size();i++)
+        if(ans[i]==s){
+            return;
+        }
+        ans.push_back(s);
+    for(int i=ind; i<A.size(); i++){
+        s.push_back(A[i]);
+        find_sum(A, s, i+1, ans);
+        s.pop_back();
+    }
+}
+
+vector<vector<int> > Solution::subsetsWithDup(vector<int> &A) {
+    vector<int> s;
+    vector<vector<int> > ans;
+    sort(A.begin(), A.end());
+    find_sum(A, s, 0, ans);
+    return ans;
+}

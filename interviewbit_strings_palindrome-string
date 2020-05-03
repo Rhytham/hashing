@@ -1,0 +1,72 @@
+int Solution::isPalindrome(string A) {
+    int i=0, j = A.size()-1;
+    while(i<j){
+        if(A[i]>='A' && A[i]<='Z'){
+            if(A[j]>='A' && A[j]<='Z'){
+                if(A[i]!=A[j]){
+                    return 0;
+                }
+            } else if(A[j]>='a' && A[j]<='z'){
+                if((A[i]-'A')!=(A[j]-'a')){
+                    return 0;
+                }
+            } else if(A[j]>='0' && A[j]<='9'){
+                return 0;
+            } else{
+                j--;
+                continue;
+            }
+            i++;
+            j--;
+        } else if(A[i]>='a' && A[i]<='z'){
+            if(A[j]>='a' && A[j]<='z'){
+                if(A[i]!=A[j]){
+                    return 0;
+                }
+            } else if(A[j]>='A' && A[j]<='Z'){
+                if((A[i]-'a')!=(A[j]-'A')){
+                    return 0;
+                }
+            } else if(A[j]>='0' && A[j]<='9'){
+                return 0;
+            } else{
+                j--;
+                continue;
+            }
+            i++;
+            j--;
+        } else if(A[i]>='0' && A[i]<='9'){
+            if(A[j]>='0' && A[j]<='9'){
+                if(A[i]!=A[j]){
+                    return 0;
+                }
+            } else if((A[j]>='A' && A[j]<='Z') || (A[j]>='a' && A[j]<='z')){
+                return 0;
+            } else{
+                j--;
+                continue;
+            }
+            i++;
+            j--;
+        } else{
+            i++;
+        }
+    }
+    return 1;
+}
+
+
+
+bool isPalindrome(string s) {
+
+            int i = 0, j = (int)s.size() - 1;
+            while(i < j)
+            {
+                while(i < j && !isalnum(s[i])) i++;
+                while(i < j && !isalnum(s[j])) j--;
+                if (toupper(s[i]) != toupper(s[j])) return false; 
+                i++;
+                j--;
+            }
+            return true;
+        }

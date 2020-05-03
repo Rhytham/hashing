@@ -1,0 +1,41 @@
+int check(char c){
+    if(c=='I'){
+        return 1;
+    } 
+    if(c=='V'){
+        return 5;
+    } 
+    if(c=='X'){
+        return 10;
+    } 
+    if(c=='L'){
+        return 50;
+    } 
+    if(c=='C'){
+        return 100;
+    } 
+    if(c=='D'){
+        return 500;
+    } 
+    if(c=='M'){
+        return 1000;
+    } 
+}
+
+int Solution::romanToInt(string A) {
+    int n = A.length(), i=0, sum=0;
+    while(i<n){
+        while((i+1)<n && check(A[i])>=check(A[i+1])){
+            sum += check(A[i]);
+            i++;
+        }
+        int aux = 0;
+        while((i+1)<n && check(A[i])<check(A[i+1])){
+            aux += check(A[i]);
+            i++;
+        }
+        sum += (check(A[i])-aux);
+        i++;
+    }
+    return sum;
+}

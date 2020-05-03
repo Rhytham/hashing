@@ -1,0 +1,22 @@
+int Solution::trap(const vector<int> &A) {
+    stack<int> s;
+    int ans=0;
+    
+    for(int i=0; i<A.size(); i++){
+        while(!s.empty() && A[i]>=A[s.top()]){
+            int mn=s.top();
+            s.pop();
+            if (!s.empty() && A[i]<A[s.top()]){
+               ans += (A[i]-A[mn])*(i-s.top()-1);
+               //cout<<"1 "<<i<<" "<<s.top()<<" "<<mn<<" "<<ans<<endl;
+            }
+            else if(!s.empty() && A[i]>=A[s.top()]){
+               ans += (A[s.top()]-A[mn])*(i-s.top()-1);
+            } 
+         }
+        s.push(i);
+    }
+    
+   
+    return ans;
+}

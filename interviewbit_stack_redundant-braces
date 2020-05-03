@@ -1,0 +1,53 @@
+struct node{
+    char data;
+    struct node* next;
+    node(char d){
+        this->data=d;
+        this->next=NULL;
+    }
+};
+struct node*top=NULL;
+
+void push(char d){
+    struct node* temp = new node(d);
+    temp->next=top;
+    top=temp;
+}
+
+char pop(){
+    if(top==NULL){
+        return -1;
+    }
+    char d=top->data;
+    top=top->next;
+    return d;
+}
+
+
+
+int Solution::braces(string A) {
+    int n = A.length();
+    for(int i=0;i<n;i++){
+        if(A[i]=='('){
+            push(A[i]);
+        }else if(A[i]=='+' || A[i]=='-' || A[i]=='*' || A[i]=='/'){
+            push('c');
+        }else if(A[i]==')'){
+            struct node* t = top;
+            bool ans=0;
+            while(t->data!='('){
+                if(t->data=='c'){
+                    ans=1;
+                  }
+                  pop();
+                  t = t->next;
+            }
+            pop();
+            if(ans==0){
+                return 1;
+            }
+        }
+    }
+
+    return 0;
+}

@@ -1,0 +1,61 @@
+struct Node{
+    int val;
+    struct Node* next;
+    Node(int d){
+        this->val=d;
+        this->next=NULL;
+    }
+};
+struct Node* node;
+
+MinStack::MinStack() {
+    node=NULL;
+}
+
+void MinStack::push(int x) {
+    struct Node* m1, *m2;
+    if(node==NULL || x<node->val){
+        m1=new Node(x);
+        m2=new Node(x);
+    } else{
+        m1=node;
+        node=node->next;
+        m2=new Node(x);
+    }
+    m2->next=node;
+    node=m2;
+    m1->next=node;
+    node=m1;
+}
+
+void MinStack::pop() {
+    if(node==NULL){
+        return;
+    }
+    struct Node* m=node;
+    node=node->next;
+    if(node->val==m->val){
+        node=node->next;
+    } else{
+        node=node->next;
+        m->next=node;
+        node=m;
+    }
+}
+
+int MinStack::top() {
+    if(node==NULL){
+        return -1;
+    }
+    struct Node* m=node;
+    m=m->next;
+    return m->val;
+}
+
+int MinStack::getMin() {
+    if(node==NULL){
+        return -1;
+    }
+    return node->val;
+}
+

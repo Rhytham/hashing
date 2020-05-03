@@ -1,0 +1,72 @@
+#include<iostream>
+using namespace std;
+
+struct nod{
+    int data;
+    struct nod *left, *right;
+    nod(int val){
+        this->data=val;
+        this->left= NULL;
+        this->right= NULL;
+    }
+};
+
+int diameter(struct nod* node, int& maxx){
+    if(node==NULL){
+        return 0;
+    }
+
+   int l = diameter(node->left, maxx);
+   int r = diameter(node->right, maxx);
+
+   if(l+r+1 > maxx){
+       maxx = l+r+1;
+   }
+   int m=-1;
+    if(l>r){
+        m=l;
+    } else{
+        m=r;
+    }
+   return 1 + m;
+}
+
+int main(){
+
+    int t, x;
+    cin>>t>>x;
+
+    struct nod* root = new nod(x);
+
+    for(int j=0;j<t-1;j++){
+        string a;
+        cin>>a;
+        int ele;
+        cin>>ele;
+        int i = 0;
+        //cout<<a.length();
+        struct nod* node = root;
+
+        while(i<a.length()){
+            if(a[i]=='L'){
+                if(!node->left){
+                    node->left = new nod(-1);
+                }
+                node = node->left;
+            } else{
+                if(!node->right){
+                    node->right = new nod(-1);
+                }
+                node = node->right;
+            }
+            i++;
+        }
+        node->data = ele;
+
+    }
+    int maxx=0;
+    diameter(root, maxx);
+    cout<<maxx;
+    return 0;
+}
+

@@ -1,0 +1,75 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+ 
+ListNode* merge(ListNode* A1, ListNode* A2, int start, int mid, int end){
+     int i=start, j=mid+1;
+     ListNode* t1=A1, *t2=A2, *prev=NULL, *head=A1;
+     while(i<=mid && j<=end){
+         if(t1->val > t2->val){
+             if(prev)
+                prev->next= t2;
+             else{
+                 head=t2;
+             }
+             ListNode* temp2=t2->next;
+             t2->next=t1;
+             prev=t2;
+             t2=temp2;
+             j++;
+         } else{
+             prev=t1;
+             t1=t1->next;
+             i++;
+         }
+     }
+     while(j<=end){
+             prev->next=t2;
+             prev=t2;
+             t2=t2->next;
+             j++;
+     }
+     while(i<=mid){
+         prev=t1;
+         t1=t1->next;
+         i++;
+     }
+     prev->next=t2;
+     A1=head;
+     return A1;
+ }
+ 
+ ListNode* mergesort(ListNode* A, int start, int end){
+     if(start>end){
+         return NULL;
+     }
+     if(start==end){
+         return A;
+     }
+     int mid=(start+end)/2, i=start;
+     ListNode* temp=A;
+     while(i<=mid){
+         temp=temp->next;
+         i++;
+     }
+     A=mergesort(A, start, mid);
+     temp=mergesort(temp, mid+1, end);
+     A=merge(A, temp, start, mid, end);
+     return A;
+ }
+ 
+ListNode* Solution::sortList(ListNode* A) {
+    ListNode* temp=A;
+    int n=0;
+    while(temp){
+        n++;
+        temp=temp->next;
+    }
+    A=mergesort(A, 0, n-1);
+    return A;
+}

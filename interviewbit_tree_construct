@@ -1,0 +1,88 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ int pre_ind=0;
+ int find_index(vector<int> &B, int target, int start, int end){
+    for(int i=start;i<=end;i++){
+        if(B[i]==target){
+            return i;
+        }
+    }
+    return -1;
+}
+ 
+TreeNode* construct(vector<int> &A, vector<int> &B, int start, int end){
+
+    if(start>end){
+        return NULL;
+    }
+
+    TreeNode* node=new TreeNode(A[pre_ind++]);
+    if(start==end){
+        return node;
+    }
+    int i=find_index(B, node->val, start, end);
+
+    node->left=construct(A, B, start, i-1);
+    node->right=construct(A, B, i+1, end);
+
+    return node;
+}
+
+TreeNode* Solution::buildTree(vector<int> &A, vector<int> &B) {
+    if(A.empty()){
+        return NULL;
+    }
+    pre_ind=0;
+    return construct(A, B, 0, (A.size()-1));
+}
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ int post_index=0;
+ int find_index(vector<int> &A, int target, int start, int end){
+    for(int i=start;i<=end;i++){
+        if(A[i]==target){
+            return i;
+        }
+    }
+    return -1;
+}
+ 
+ 
+ TreeNode* post_in_construct( vector<int> &A, vector<int> &B, int start, int end){
+    if(start>end){
+        return NULL;
+    }
+    TreeNode* node = new TreeNode(B[post_index--]);
+    if(start==end){
+        return node;
+    }
+    int i = find_index(A, node->val, start, end);
+    
+    node->right = post_in_construct(A, B, i+1, end);
+    node->left = post_in_construct(A, B, start, i-1);
+    
+    return node;
+}
+ 
+TreeNode* Solution::buildTree(vector<int> &A, vector<int> &B) {
+    int n = A.size();
+    if(n==0){
+        return NULL;
+    }
+    post_index=n-1;
+    return post_in_construct(A, B, 0, n-1);
+}

@@ -1,0 +1,26 @@
+vector<int> sol(vector<int> &A) {
+    int n = A.size();
+    if(n==1){
+        A[0]=-1;
+        return A;
+    }
+    int st[n], st1[n], top1=-1, top2=-1;
+    st[++top1] = A[n-1];
+    st1[++top2] = (n-1);
+
+    for(int i=n-2;i>=0;i--){
+        while(top1!=-1 && A[i]< st[top1]){
+            A[st1[top2--]] = A[i];
+            top1--;
+        }
+        st[++top1] = A[i];
+        st1[++top2] = i;
+    }
+
+    while(top1!=-1){
+        A[st1[top2--]] = -1;
+        top1--;
+    }
+
+    return A;
+}

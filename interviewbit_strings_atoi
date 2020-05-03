@@ -1,0 +1,33 @@
+int Solution::atoi(const string A) {
+    int n = A.length(), i=0, ans=0;
+    bool b = true, neg = false;
+    while(A[i]==' '){
+        i++;
+    }
+    if(A[i]=='-'){
+        neg = true;
+        i++;
+    } else if(A[i]=='+'){
+        i++;
+    }
+    while(i<n && A[i]>='0' && A[i]<='9'){
+        if(b && A[i]=='0'){
+            i++;
+            continue;
+        }
+        b = false;
+        //cout<<((long long)ans*10 + (int)A[i]-(int)'0')<<endl;
+        if(!neg && ((long long)ans*10 + A[i]-'0') >= INT_MAX){
+            return INT_MAX;
+        } else if(neg && ((long long)ans*10 + A[i]-'0') > (INT_MAX)){
+            return INT_MIN;
+        }
+        ans = (ans*10)+(int)A[i]-(int)'0';
+        //cout<<ans<<endl;
+        i++;
+    }
+    if(neg){
+        ans = -ans;
+    }
+    return ans;
+}

@@ -1,0 +1,46 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+vector<int> Solution::recoverTree(TreeNode* A) {
+    TreeNode* node = A;
+    stack<TreeNode*> s;
+    vector<int> v;
+    int min  = -1;
+    
+    while(node || !s.empty()){
+        while(node){
+            s.push(node);
+            node = node->left;
+        }
+        node = s.top();
+        s.pop();
+        if(node->val < min && v.size()==0){
+            v.push_back(min);
+            v.push_back(node->val);
+            min = node->val;
+        }
+        else if(node->val < min && v.size()==2){
+            v[1] = node->val;
+            break;
+        }
+        min = node->val;
+        node = node->right;
+    }
+    if(v[0]>v[1]){
+        int temp = v[0];
+        v[0] = v[1];
+        v[1] = temp;
+    }
+    return v;
+}
+
+
+
+OR
+MORRIS TRAVERSAL IN O(1) space

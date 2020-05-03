@@ -1,0 +1,98 @@
+string find(int num, int exp){
+    string ans="";
+    if(exp==1000){
+        while(num>0){
+            ans += 'M';
+            num--;
+        }
+        return ans;
+    }
+    if(num==9){
+        if(exp==1){
+            return "IX";
+        } else if(exp==10){
+            return "XC";
+        } else if(exp==100){
+            return "CM";
+        }
+    }
+    
+    if(num>=5){
+        char c1;
+        if(exp==1){
+            c1='I';
+            ans='V';
+        } else if(exp==10){
+            c1='X';
+            ans='L';
+        } else if(exp==100){
+            c1='C';
+            ans='D';
+        }
+        num-=5;
+        while(num>0){
+            ans += c1;
+            num--;
+        }
+        return ans;
+    }
+    
+    if(num==4){
+        if(exp==1){
+            return "IV";
+        } else if(exp==10){
+            return "XL";
+        } else if(exp==100){
+            return "CD";
+        }
+    }
+    
+    
+    if(num>=1){
+        char c;
+        if(exp==1){
+            c='I';
+        } else if(exp==10){
+            c='X';
+        } else if(exp==100){
+            c='C';
+        }
+        while(num>0){
+            ans += c;
+            num--;
+        }
+        return ans;
+    }
+}
+
+string Solution::intToRoman(int A) {
+    string ans="";
+    int exp=1;
+    while((A/exp)>0){
+        exp*=10;
+    }
+    exp/=10;
+    while(exp>0){
+        int num = (A/exp)%10;
+        if(num==0){
+            exp/=10;
+            continue;
+        }
+        ans += find(num,exp);
+        exp/=10;
+    }
+    return ans;
+}
+
+editorial solution
+string intToRoman(int num) {
+        // 1000, 2000, 3000
+        string M[] = {"", "M", "MM", "MMM"};
+        // 100, 200, 300, .. 900
+        string C[] = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
+        // 10, 20, ... 90
+        string X[] = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
+        // 1, 2, ... 9
+        string I[] = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+        return M[num/1000] + C[(num%1000)/100] + X[(num%100)/10] + I[num%10];
+    }

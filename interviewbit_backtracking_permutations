@@ -1,0 +1,53 @@
+bool in(int a, vector<int> &s){
+    for(int i=0; i<s.size(); i++){
+        if(s[i]==a){
+            return true;
+        }
+    }
+    return false;
+}
+
+void do_permute(vector<int> &A, vector<int> &s, vector<vector<int> > &ans){
+    if(s.size()==A.size()){
+        ans.push_back(s);
+        return;
+    }
+    for(int i=0; i<A.size(); i++){
+        if(!in(A[i], s)){
+            s.push_back(A[i]);
+            do_permute(A, s, ans);
+            s.pop_back();
+        }
+    }
+}
+
+vector<vector<int> > Solution::permute(vector<int> &A) {
+    vector<int> s;
+    vector<vector<int> > ans;
+    do_permute(A, s, ans);
+    return ans;
+}
+
+
+void permute(string a, int l, int r)  
+{  
+    // Base case  
+    if (l == r)  
+        cout<<a<<endl;  
+    else
+    {  
+        // Permutations made  
+        for (int i = l; i <= r; i++)  
+        {  
+  
+            // Swapping done  
+            swap(a[l], a[i]);  
+  
+            // Recursion called  
+            permute(a, l+1, r);  
+  
+            //backtrack  
+            swap(a[l], a[i]);  
+        }  
+    }  
+}

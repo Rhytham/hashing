@@ -1,0 +1,37 @@
+vector<vector<int> > Solution::fourSum(vector<int> &A, int B) {
+    unordered_map<int, vector<pair<int,int> > > m;
+    vector<vector<int> > ans;
+    sort(A.begin(), A.end());
+    for(int i=0; i<A.size(); i++){
+        for(int j=i+1; j<A.size(); j++){
+            m[A[i]+A[j]].push_back({i, j});
+        }
+    }
+    for(int i=0; i<A.size(); i++){
+        for(int j=i+1; j<A.size(); j++){
+            int s=A[i]+A[j];
+            if(m.find(B-s) != m.end()){
+                vector<pair<int,int> > p=m[B-s];
+                for(int l=0; l<p.size(); l++){
+                    if(p[l].first==i || p[l].second==i || p[l].first==j || p[l].second==j)
+                        continue;
+                    vector<int> v={A[p[l].first], A[p[l].second], A[i], A[j]};
+                    sort(v.begin(), v.end());
+                    bool b=false;
+                    for(int k=0; k<ans.size(); k++){
+                        if(v[0]==ans[k][0] && v[1]==ans[k][1] && v[2]==ans[k][2] && v[3]==ans[k][3]){
+                            b=true;
+                            break;
+                        }
+                    }
+                    if(!b){
+                        ans.push_back(v);
+                    }
+                }
+                
+            }
+        }
+    }
+    
+    return ans;
+}

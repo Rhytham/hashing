@@ -1,0 +1,25 @@
+string Solution::countAndSay(int A) {
+    string ans = "1", n = "1";
+    int i = 1;
+    while(i<A){
+        char c = n[0];
+        int count  = 0;
+        ans = "";
+        for(int j=0; j<n.length(); j++){
+            if(n[j]==c){
+                count++;
+            } else{
+                ans += (count-1 + (int)'1');
+                ans += c;
+                c = n[j];
+                count = 1;
+            }
+        }
+        ans += (count-1 + (int)'1');
+        ans += c;
+        n = ans;
+        i++;
+    }
+    
+    return ans;
+}

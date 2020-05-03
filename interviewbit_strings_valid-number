@@ -1,0 +1,57 @@
+int Solution::isNumber(const string A) {
+    int i=0, n=A.size();
+    bool d = 0, num=0, space=0, no=0;
+    
+    while(A[i]==' '){
+        i++;
+    }
+    if(A[i]=='+' || A[i]=='-'){
+        i++;
+    }
+    if(i==n){
+        return 0;
+    }
+    
+    while(i<n){
+        if(space && A[i]!=' '){
+            return 0;
+        }
+        if(d && A[i]=='.'){
+            return 0;
+        }
+        if(A[i]=='.'){
+            d = 1;
+            i++;
+            continue;
+        }
+        if(A[i]=='e' && !(!d ||(d && num))){
+            return 0;
+        }
+        if(A[i]=='e'){
+            i++;
+            if(A[i]=='+' || A[i]=='-'){
+                i++;
+            }
+            d=1;
+            num=0;
+            continue;
+        }
+        if(A[i]==' '){
+            space=1;
+            i++;
+            continue;
+        }
+        if(!(A[i]>='0' && A[i]<='9')){
+            return 0;
+        }
+        if(d){
+            num=1;
+        }
+        no=1;
+        i++;
+    }
+    if(!no || (d && !num)){
+        return 0;
+    }
+    return 1;
+}

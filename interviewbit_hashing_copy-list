@@ -1,0 +1,32 @@
+RandomListNode* Solution::copyRandomList(RandomListNode* A) {
+    
+    unordered_map<RandomListNode*,RandomListNode*> m;
+    RandomListNode* node=A, *head=NULL,*temp=head;
+    
+    while(node){
+        if(!head){
+            temp=new RandomListNode(node->label);
+            head=temp;
+        } else{
+            temp->next=new RandomListNode(node->label);
+            temp=temp->next;
+        }
+        m[node]=temp;
+        node=node->next;
+    }
+    temp->next=NULL;
+    
+    node=A;
+    temp=head;
+    while(node){
+        if(node->random){
+            temp->random=m[node->random];
+        } else{
+            temp->random=NULL;
+        }
+        node=node->next;
+        temp=temp->next;
+    }
+    
+    return head;
+}

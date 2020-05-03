@@ -1,0 +1,23 @@
+void find_sum(vector<int> &A, int B, vector<int> &s, int sum, int ind, vector<vector<int> > &ans){
+    if(sum==B){
+        for(int i=0;i<ans.size();i++)
+            if(ans[i]==s){
+                return;
+            }
+        ans.push_back(s);
+        return;
+    }
+    for(int i=ind; i<A.size() && sum+A[i]<=B; i++){
+        s.push_back(A[i]);
+        find_sum(A, B, s, sum+A[i], i+1, ans);
+        s.pop_back();
+    }
+}
+
+vector<vector<int> > Solution::combinationSum(vector<int> &A, int B) {
+    vector<int> s;
+    vector<vector<int> > ans;
+    sort(A.begin(), A.end());
+    find_sum(A, B, s, 0, 0, ans);
+    return ans;
+}
